@@ -17,31 +17,7 @@ main {
   padding-top: 50px;
 }
 
-#details {
-  margin: 5px;
-}
-
-#restaurantDetails, #reviewDetails {
-  margin: 5px;
-}
-
-#restaurantDetails {
-  padding: 5px;
-  list-style: none;
-}
-
-#restaurantDetails .buttons:last-child {
-  margin-bottom: 0rem;
-}
-
-#reviewDetails h3 {
-  margin-top: 10px;
-}
-
-#reviewTitle {
-  font-weight: bold;
-}
-
-#reviewReviewer {
-  font-style: italic;
+#reviews {
+  max-height: 50vh;
+  overflow: auto;
 }

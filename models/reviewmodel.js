@@ -30,7 +30,25 @@ class reviewModel {
             return response
         } catch (error) {
             console.log("ERROR: ", error);
-            return error
+            return error;
+        }
+    }
+
+    static async getOneAvgStars(id) {
+        try {
+            const response = await db.any(`
+                SELECT AVG(review.stars) as avg_stars FROM review
+                WHERE review.restaurant_id = ${id}
+                GROUP BY review.restaurant_id;
+            `);
+            let avgStars = Math.floor(response[0].avg_stars), avgStarsString = ``;
+            for (let i = 0; i <= avgStars; i++) {
+                avgStarsString += `<i class="fas fa-star has-text-warning"></i>`
+            };
+            return avgStarsString
+        } catch (error) {
+            console.log("ERROR: ", error);
+            return error;
         }
     }
 
@@ -62,6 +80,22 @@ class reviewModel {
             return error
         }
     }
+
+    static async newReview(reviewer_id, restaurant_id, review_title, review_stars, review_review) {
+        try {
+            const response = await db.one(`
+                INSERT INTO review (reviewer_id, restaurant_id, stars, title, review)
+                VALUES ($1, $2, $3, $4, $5)
+                RETURNING id`,
+                [reviewer_id, restaurant_id, review_stars, review_title, review_review]
+            );
+            return response
+        } catch (error) {
+            console.log("ERROR: ", error);
+            return error
+        }
+    }
+
 }
 
 module.exports = reviewModel;

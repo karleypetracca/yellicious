@@ -6,39 +6,6 @@ ${restaurantData.map(restaurant =>
     <h2><a class='button is-large is-link' href='/${restaurant.id}'>
         ${restaurant.name}
     </a></h2>
-    ${!!restaurant.category ? `
-        <div id="details">
-            <div id="restaurantDetails">
-                <div class="field is-grouped">
-                    <div class="control buttons has-addons">
-                        <span class="button is-link is-light">Category:</span>
-                        <span class="button">${restaurant.category}</span>
-                    </div>
-                    <div class="control buttons has-addons">
-                        <span class="button is-link is-light">Distance:</span>
-                        <span class="button">${restaurant.distance}</span>
-                    </div>
-                    <div class="control buttons has-addons">
-                        <span class="button is-link is-light">Offers takeout:</span>
-                        <span class="button">${restaurant.takeout}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="columns is-mobile" id="reviewDetails">
-                <h3 class="column is-2" style='color: rgb(255, 255, 255)'>Reviews</h3>
-                <div class="column">
-                ${reviewData.map(review =>
-                    `
-                    <div class="box">
-                        <h4 id="reviewTitle">[${review.stars}] ${review.title}</h4>
-                        <p id="reviewContent">"${review.review}"</p>
-                        <p id="reviewReviewer">- ${review.reviewer_name}</p>
-                    </div>
-                    `
-                )}
-                </div>
-            </div>
-        </div>
-        ` : ``}
+    
     `
 )}
