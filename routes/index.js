@@ -3,15 +3,33 @@ const express = require('express'),
   reviewModel = require('../models/reviewmodel');
 
 
-/* GET home page. */
-router.get('/:id?', async (req, res) => {
+// get home/restaurant page
+router.get('/', async (req, res) => {
+  let restaurantData = [], avgStars = "";
+  restaurantData = await reviewModel.getAllRestaurant();
+
+  res.render('template', {
+    locals: {
+      title: 'Yellicious',
+      restaurantData: restaurantData,
+      avgStars: avgStars
+    },
+    partials: {
+      partial: 'partial-index'
+    }
+  });
+});
+
+
+// get restaurant/individual restaurant page
+router.get('/restaurant/:id?', async (req, res) => {
   const { id } = req.params;
-  let restaurantData = [], reviewData = [], avgStarsString = "", partial = "";
+  let restaurantData = [], reviewData = [], avgStars = "", partial = "";
 
   if (!!id) {
     restaurantData = await reviewModel.getOneRestaurant(id);
     reviewData = await reviewModel.getOne(id);
-    avgStarsString = await reviewModel.getOneAvgStars(id);
+    avgStars = await reviewModel.getOneAvgStars(id);
     partial = 'partial-id';
   } else {
     restaurantData = await reviewModel.getAllRestaurant();
@@ -23,7 +41,7 @@ router.get('/:id?', async (req, res) => {
       title: 'Yellicious',
       restaurantData: restaurantData,
       reviewData: reviewData,
-      avgStarsString: avgStarsString
+      avgStars: avgStars
     },
     partials: {
       partial: partial
@@ -31,11 +49,15 @@ router.get('/:id?', async (req, res) => {
   });
 });
 
-router.post('/', async (req, res) => {
+
+// add review to individual restaurant
+router.post('/restaurant/review', async (req, res) => {
   const { reviewer_id, restaurant_id, review_title, review_stars, review_review } = req.body;
+  
   let postData = await reviewModel.newReview(reviewer_id, restaurant_id, review_title, review_stars, review_review);
-  console.log(postData);
-  res.sendStatus(200);
+  
+  res.status(200).redirect(`/restaurant/${restaurant_id}`);
 });
+
 
 module.exports = router;

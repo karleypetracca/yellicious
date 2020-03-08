@@ -11,6 +11,7 @@ CREATE TABLE restaurant (
 CREATE TABLE reviewer (
     id serial PRIMARY KEY,
     name text NOT NULL,
+    password text NOT NULL,
     email varchar,
     karma int CHECK (karma <= 7)
 );
@@ -29,8 +30,14 @@ CREATE TABLE review (
 INSERT INTO restaurant (name, distance, category, favorite_dish, takeout, ate_last)
     VALUES ('Strange Taco', 30, 'Mexican', 'burrito', TRUE, '2019-08-02 12:30:00');
     
-INSERT INTO reviewer (name, email, karma)
-    VALUES ('Zeus', 'trash@hotmail.com', 2);
+INSERT INTO reviewer (name, password, email, karma)
+    VALUES ('Zeus', 'password', 'trash@hotmail.com', 2);
 
 INSERT INTO review (reviewer_id, restaurant_id, stars, title, review)
     VALUES (1, 1, 2, 'my mom makes better food', 'they dont even have milkshakes WUT');
+
+ALTER TABLE reviewer
+ADD COLUMN password text;
+
+UPDATE reviewer
+SET password = 'password';

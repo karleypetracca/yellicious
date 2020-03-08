@@ -12,7 +12,7 @@ ${restaurantData.map(restaurant =>
                 </div>
                 <div class="control buttons has-addons">
                     <span class="button is-link is-light is-static">Star rating:</span>
-                    <span class="button is-static">${avgStarsString}</span>
+                    <span class="button is-static">${`<i class="fas fa-star has-text-warning"></i>`.repeat(avgStars)}</span>
                 </div>
             </div>
             <div class="column">
@@ -26,9 +26,12 @@ ${restaurantData.map(restaurant =>
                 </div>
             </div>
         </div>
+
         <hr>
+
+        <!-- add review form -->
         <div class="box">
-            <form action="/" method="POST">
+            <form action="/restaurant/review" method="POST">
                 <input type="hidden" value="1" name="reviewer_id">
                 <input type="hidden" value=${restaurant.id} name="restaurant_id">
                 <div class="field">
@@ -51,6 +54,7 @@ ${restaurantData.map(restaurant =>
             </form>
         </div>
 
+        <!-- existing reviews for restaurant -->
         <div class="columns is-mobile">
             <h3 class="column is-2" style='color: rgb(255, 255, 255)'>Reviews</h3>
             <div class="column"  id="reviews">
