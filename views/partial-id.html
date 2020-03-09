@@ -30,29 +30,34 @@ ${restaurantData.map(restaurant =>
         <hr>
 
         <!-- add review form -->
-        <div class="box">
-            <form action="/restaurant/review" method="POST">
-                <input type="hidden" value="1" name="reviewer_id">
-                <input type="hidden" value=${restaurant.id} name="restaurant_id">
-                <div class="field">
-                    <label class="label">Title: 
-                        <input type="text" name="review_title" placeholder="Review Title">
-                    </label>
-                    <label class="label">Rating: 
-                            1 <input type="radio" name="review_stars" value="1">
-                            2 <input type="radio" name="review_stars" value="2">
-                            3 <input type="radio" name="review_stars" value="3">
-                            4 <input type="radio" name="review_stars" value="4">
-                            5 <input type="radio" name="review_stars" value="5">
-                    </label>
-                </div>
-                <div class="field">
-                    <label class="label">Your review: </label>
-                    <textarea name="review_review"></textarea>
-                </div>
-                <button type="submit" class="button is-success">Save Review</button>
-            </form>
-        </div>
+        ${!!sessionData.is_logged_in ? `
+            <div class="box">
+                <form action="/restaurant/review" method="POST">
+                    <input type="hidden" value="${sessionData.userId}" name="reviewer_id">
+                    <input type="hidden" value=${restaurant.id} name="restaurant_id">
+                    <div class="field">
+                        <label class="label">Title: 
+                            <input type="text" name="review_title" placeholder="Review Title">
+                        </label>
+                        <label class="label">Rating: 
+                                1 <input type="radio" name="review_stars" value="1">
+                                2 <input type="radio" name="review_stars" value="2">
+                                3 <input type="radio" name="review_stars" value="3">
+                                4 <input type="radio" name="review_stars" value="4">
+                                5 <input type="radio" name="review_stars" value="5">
+                        </label>
+                    </div>
+                    <div class="field">
+                        <label class="label">Your review: </label>
+                        <textarea name="review_review"></textarea>
+                    </div>
+                    <button type="submit" class="button is-success">Save Review</button>
+                </form>
+            </div>
+        ` : `
+            <div class="box">Please <a href="../user/login">LOGIN</a> to add a review!
+            </div>!
+        `}
 
         <!-- existing reviews for restaurant -->
         <div class="columns is-mobile">

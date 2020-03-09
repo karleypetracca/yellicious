@@ -8,7 +8,8 @@ const express = require('express'),
 router.get('/login', async (req, res) => {
   res.render('template', {
     locals: {
-      title: 'Yellicious'
+      title: 'Yellicious',
+      sessionData: req.session
     },
     partials: {
       partial: 'partial-login'
@@ -28,9 +29,9 @@ router.post('/login', async (req, res) => {
     req.session.is_logged_in = loginResponse.isValid;
     req.session.userId = loginResponse.userId;
     req.session.name = loginResponse.name;
-    res.status(200).redirect('/');
+    res.redirect('/').redirect('/');
   } else {
-    res.status(403).redirect('/login');
+    res.redirect('/login');
   }
 });
 
@@ -39,7 +40,8 @@ router.post('/login', async (req, res) => {
 router.get('/signup', async (req, res) => {
   res.render('template', {
     locals: {
-      title: 'Yellicious'
+      title: 'Yellicious',
+      sessionData: req.session
     },
     partials: {
       partial: 'partial-signup'
@@ -58,7 +60,14 @@ router.post('/signup', async (req, res) => {
   const user = new userModel(null, name, email, hash);
   user.addUser();
 
-  res.status(200).redirect('/');
+  res.redirect('/');
+});
+
+
+// get logout page
+router.get('/logout', async (req, res) => {
+  req.session.destroy();
+  res.redirect('back');
 });
 
 

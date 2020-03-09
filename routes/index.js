@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
   res.render('template', {
     locals: {
       title: 'Yellicious',
+      sessionData: req.session,
       restaurantData: restaurantData,
       avgStars: avgStars
     },
@@ -39,6 +40,7 @@ router.get('/restaurant/:id?', async (req, res) => {
   res.render('template', {
     locals: {
       title: 'Yellicious',
+      sessionData: req.session,
       restaurantData: restaurantData,
       reviewData: reviewData,
       avgStars: avgStars
@@ -56,7 +58,7 @@ router.post('/restaurant/review', async (req, res) => {
   
   let postData = await reviewModel.newReview(reviewer_id, restaurant_id, review_title, review_stars, review_review);
   
-  res.status(200).redirect(`/restaurant/${restaurant_id}`);
+  res.redirect(`/restaurant/${restaurant_id}`);
 });
 
 

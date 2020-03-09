@@ -1,13 +1,10 @@
-const host = "drona.db.elephantsql.com",
-    database = "aeleffvc",
-    user = "aeleffvc",
-    password = "v_TcNBP5qhuLAVqLYqn8r6UD1wrxBomv";
+require('dotenv').config();
 
 const options = {
-    host: host,
-    database: database,
-    user: user,
-    password: password
+    host: process.env['DB_HOST'],
+    database: process.env['DB_NAME'],
+    user: process.env['DB_USER'],
+    password: process.env['DB_PW']
 };
 
 const pgp = require("pg-promise")({
